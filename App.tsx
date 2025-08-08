@@ -1,20 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
+import { useState } from 'react';
 
 export default function App() {
+  const [Name, setName] = useState('');
+  const [Surname, setSurname] = useState('');
+
+  console.log("App is busy starting.")
+
   return (
     <View>
 
-      <View>
-        <Image source={require('./img/react-native.png')}/>
+      <View style={styles.mainPicture}>
+       <Image style={styles.ImageSize}
+       source = {require('./img/react-native.png')}/>
+   
       </View>
-      <Text style={styles.welcomeText}>Welcome to App</Text>
-      <Text>Enter Name: </Text>
-      <TextInput placeholder= "Name"/>
-      <Text>Enter Surname: </Text>
-      <TextInput placeholder= "Surname"/>
 
-      <Button title = "Add user"/>
+      <Text style={styles.welcomeText}>Welcome to App</Text>
+
+
+      <View style={styles.InputFlex}>
+      <Text style={styles.HeadingText}>Enter Name: </Text>
+      <TextInput style={styles.InputBoxs} placeholder= "Name"
+                                          onChangeText={newText => setName(newText)}/>
+      </View>
+
+
+      <View style={styles.InputFlex}>
+      <Text style={styles.HeadingText}>Enter Surname: </Text>
+      <TextInput style={styles.InputBoxs} placeholder= "Surname"
+                                          onChangeText={newText => setSurname(newText)}/>
+      </View>
+
+      <Button title = "Add user" onPress={() => {console.log("The user name is: " + Name + " ,Surname: " + Surname)} }/>
+                                
     </View>
   
   );
@@ -27,8 +47,36 @@ const styles = StyleSheet.create({
      paddingTop: 40,
      color: 'cyan',
      fontWeight: 'bold',
-     fontSize: 28,
-     textAlign: 'center'
+     fontSize: 32,
+     textAlign: 'center',
   },
+
+  ImageSize : {
+    width: 700,
+    height: 350,
+  },
+
+  mainPicture : {
+    paddingTop: 40,
+    alignItems: 'center'
+  },
+
+  HeadingText : {
+    fontWeight: 800,
+    color: 'black'
+  },
+
+  InputFlex : {
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent : 'space-evenly'
+
+
+
+
+  },
+  InputBoxs: {}
+
+
 });
 
