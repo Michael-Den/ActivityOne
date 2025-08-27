@@ -1,14 +1,46 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, Button, Image } from 'react-native';
 import { useState } from 'react';
+import { NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 export default function App() {
+  return( 
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={MainScreen}/>
+        <Stack.Screen name="ViewDetails" component={ViewDetails}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+ );
+};
+function ViewDetails({navigation,route}:any){
+  const NameGet = route.params.NameSend;
+  const SurnameGet = route.params.SurnameSend
+  return(
+    <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
+    <Text style={{fontSize:34,color:'white'}}>Name: {NameGet}, Surname:{SurnameGet} </Text>
+    </View>
+
+
+
+
+
+  )
+
+
+
+};
+
+  function MainScreen() {
   const [Name, setName] = useState('');
   const [Surname, setSurname] = useState('');
 
   console.log("App is busy starting.")
 
   return (
+    
     <View>
 
       <View style={styles.mainPicture}>
@@ -33,9 +65,11 @@ export default function App() {
                                           onChangeText={newText => setSurname(newText)}/>
       </View>
 
-      <Button title = "Add user" onPress={() => {console.log("The user name is: " + Name + " ,Surname: " + Surname)} }/>
+      <Button title = "Add user" onPress={() => {navigation.navigate('ViewDetails', {NameSend : Name, SurnameSend : Surname});
+      console.log("The user name is " + Name + " Surname: " + Surname)} />
                                 
     </View>
+    
   
   );
 }
